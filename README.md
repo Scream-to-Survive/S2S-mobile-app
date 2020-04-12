@@ -26,7 +26,7 @@ smart phones.
 
 S2S system is composed of two parts:
 
-###Mobile Application (Android or IOS smartphone) for citizens
+### Mobile Application (Android or IOS smartphone) for citizens
 
 This application collects voices, words or sentences said by the victim by using smartphone
 microphone and converts them to text in order to deduce the emergency or risk situation and its
