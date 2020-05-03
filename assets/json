@@ -1,0 +1,45 @@
+{
+  "id": 0,
+  "firstname":"text",
+  "lastname": "text",
+  "email": "text",
+  "phoneNumber": "text",
+  "password":"text",
+  "address": "text",
+  "birthDate": "text",
+  "contacts":[
+    {
+      "idContact":0,
+      "firstname":"text",
+      "lastname": "text",
+      "email":"text",
+      "address":"text",
+      "phoneNumber": "text"
+    }
+  ],
+  "gender":"text",
+  "height":1.78,
+  "weight": 76.5,
+  "bloodType": "text",
+  "chronicDisease":[
+    {"idChronicDisease": 0,
+      "disease": "text"}
+  ],
+
+  "Location":{
+    "latitude": 0.0,
+    "longitude": 0.0
+  },
+
+  "notifications": [
+    {
+      "id":0,
+      "title": "text",
+      "type": "text",
+      "content": "text",
+      "creationDate": "date",
+      "duration": 0
+    }
+  ]
+
+}

@@ -26,17 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Hero(
-                  tag: 'hero',
-                  child: Icon(
-                    Icons.crop_square,
-                    size: 200,
-                  ),
+                Icon(
+                  Icons.crop_square,
+                  size: 200,
+                  color: Colors.white,
                 ),
                 Text(
                   'Welcome!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    color: Colors.white,
                     fontSize: 36,
                     fontWeight: FontWeight.bold,
                   ),
@@ -50,6 +49,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     'Scream to Survive application can save your life, share it with your loved ones and help protecting them during disasters.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: Colors.white,
+
                       fontFamily: 'BalooDa2',
                       fontSize: 18,
                       height: 2,
