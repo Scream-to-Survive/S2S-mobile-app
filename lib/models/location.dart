@@ -1,19 +1,23 @@
 class MyLocation {
+  int id;
   int latitude;
   int longitude;
 
   MyLocation({
+    this.id,
     this.latitude,
     this.longitude,
   });
 
   factory MyLocation.fromMap(Map<String, dynamic> json) => MyLocation(
-    latitude: json["latitude"],
-    longitude: json["longitude"],
-  );
+        id: json["id"],
+        latitude: json["latitude"],
+        longitude: json["longitude"],
+      );
 
   Map<String, dynamic> toMap() => {
-    "latitude": latitude,
-    "longitude": longitude,
-  };
+        "id": id,
+        "latitude": latitude,
+        "longitude": longitude,
+      };
 }
