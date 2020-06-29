@@ -57,16 +57,20 @@ class DBHelper {
   initDB() async {
     Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = documentDirectory.path + "S2S_db";
-    return await openDatabase(path, version: 1, onOpen: (db) {}, onCreate: onCreate);
+    return await openDatabase(path,
+        version: 1, onOpen: (db) {}, onCreate: onCreate, onConfigure: onConfigure);
   }
-
+//on configure to enable Foreign key support
+  onConfigure(Database db) async {
+    await db.execute('PRAGMA foreign_keys = ON');
+  }
   //create user table
   onCreate(Database db, int version) async {
     await db.execute('''CREATE TABLE $_userTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_firstname TEXT NOT NULL,
     $_lastname TEXT NOT NULL,
-    $_email TEXT NOT NULL,
+    $_email TEXT NOT NULL UNIQUE,
     $_phoneNumber TEXT NOT NULL, 
     $_password TEXT NOT NULL,
     $_address TEXT DEFAULT NULL,
@@ -74,85 +78,105 @@ class DBHelper {
     $_birthDate DATE DEFAULT NULL,
     $_weight INTEGER DEFAULT NULL,
     $_height INTEGER DEFAULT NULL,
-    $_bloodType Text DEFAULT NULL
+    $_bloodType Text DEFAULT NULL )
     ''');
 
     //create notification table
     await db.execute('''
     CREATE TABLE $_notificationTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_title TEXT,
     $_type TEXT,
     $_content TEXT,
     $_creationDate DATE, 
     $_duration INTEGER,
-    $_userId INTEGER
-    FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER,
+    FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
 
     //create contacts table
     await db.execute('''
     CREATE TABLE $_contactTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_firstname TEXT,
     $_lastname TEXT,
-    $_email TEXT,
+    $_email TEXT UNIQUE,
     $_phoneNumber TEXT,
     $_address TEXT,
     $_relationship TEXT,
     $_duration INTEGER,
-    $_userId INTEGER
-    FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER,
+    FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
 
     //create location table
     await db.execute('''
     CREATE TABLE $_locationTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_latitude REAL,
     $_longitude REAL,
     $_date DATE,
-    $_userId FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER, FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
 
     //create emergency table
     await db.execute('''
     CREATE TABLE $_emergencyTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_location INTEGER,
     $_date DATE,
     $_type TEXT,
     $_isConfirmed INTEGER,
-    $_userId FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER, FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
 
     //create chronic disease table
     await db.execute('''
     CREATE TABLE $_chronicDiseaseTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_disease TEXT,
-    $_userId FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER, FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
 
     //create volunteer table
     await db.execute('''
     CREATE TABLE $_volunteerTable (
-    $_id INTEGER PRIMAY KEY AUTOINCREMENT,
+    $_id INTEGER PRIMARY KEY AUTOINCREMENT,
     $_certificateID INTEGER,
     $_isTrusted INTEGER,
-    $_userId FOREIGN KEY ($_id)
-    REFERENCES $_userTable($_id)
+    $_userId INTEGER, FOREIGN KEY ($_userId)
+    REFERENCES $_userTable($_id) )
     ''');
   }
 
   //create new user
+  initUser(User user) async {
+    final db = await database;
+    db.rawInsert('''
+    INSERT INTO $_userTable 
+    ($_firstname, $_latitude, $_email, $_phoneNumber, $_password) 
+    VALUES(${user.firstname},${user.lastname},${user.email},${user.phoneNumber}, ${user.password})
+    ''');
+  }
+
   newUser(User user) async {
     final db = await database;
     db.insert(_userTable, user.toMap());
+  }
+
+//update user
+  updateUser(User user) async {
+    final db = await database;
+    return await db.update(
+      _userTable,
+      user.toMap(),
+      where: "id = ?",
+      whereArgs: [user.id],
+    );
   }
 }

@@ -47,6 +47,34 @@ class User {
     this.location,
   });
 
+  User.withName(
+    this.id,
+    this.firstname,
+    this.lastname,
+    this.email,
+    this.phoneNumber,
+    this.password,
+  );
+
+  //initialize user
+  factory User.initFromMap(Map<String, dynamic> json) => User(
+        id: json["id"],
+        firstname: json["firstname"],
+        lastname: json["lastname"],
+        email: json["email"],
+        phoneNumber: json["phoneNumber"],
+        password: json["password"],
+      );
+
+  Map<String, dynamic> initToMap() => {
+        "id": id,
+        "firstname": firstname,
+        "lastname": lastname,
+        "email": email,
+        "phoneNumber": phoneNumber,
+        "password": password,
+      };
+
   factory User.fromMap(Map<String, dynamic> json) => User(
         id: json["id"],
         firstname: json["firstname"],
