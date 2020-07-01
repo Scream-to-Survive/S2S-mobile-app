@@ -16,7 +16,7 @@ class LeftButton extends StatelessWidget {
       width: 130,
       height: height < 650 ? 40 : 50,
       child: MaterialButton(
-        color: kColor1,
+        color: kPrimaryColor,
         elevation: 6,
         highlightElevation: 2,
         child: Row(

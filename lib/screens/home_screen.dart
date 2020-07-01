@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:s2s/components/custom_alert_button.dart';
+import 'package:s2s/components/custom_bottom_navigation_bar.dart';
+import 'package:s2s/components/custom_circle_avatar.dart';
 import 'package:s2s/components/my_custom_drawer.dart';
 import 'package:s2s/utilities/constants.dart';
 
@@ -16,85 +17,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-          title: Text('Aissa Serrar'),
-          backgroundColor: kColor2,
-          leading: IconButton(
-            icon: Hero(
-              tag: 'userPicture',
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/profilePicturePlaceholder.jpg'),
-              ),
-            ),
-            onPressed: () => _scaffoldKey.currentState.openDrawer(),
-          )),
-      drawer: MyCustomDrawer(),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            Container(
-              height: 300,
-              child: Card(
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(
-                    20,
-                  ),
-                ),
-                child: Stack(
-                  overflow: Overflow.clip,
-                  children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: GoogleMap(
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(35.521563, 2.677433),
-                          zoom: 15.0,
-                        ),
-                        zoomControlsEnabled: false,
-                        markers: {
-                          Marker(
-                              markerId: MarkerId('aissa'), position: LatLng(35.521563, 2.677433)),
-                        },
-                        mapType: MapType.normal,
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: kColor2.withOpacity(.6),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Lat: 35.52',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                            ),
-                          ),
-                          Text(
-                            'Lon: 2.67',
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          onPressed: () => _scaffoldKey.currentState.openDrawer(),
+          icon: CustomCircleAvatar(),
         ),
       ),
+      drawer: MyCustomDrawer(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: CustomAlertButton(),
+      bottomNavigationBar: CustomBottomNavigationBar(),
     );
   }
 }

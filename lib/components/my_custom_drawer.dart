@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:s2s/components/custom_circle_avatar.dart';
 import 'package:s2s/utilities/constants.dart';
 
 class MyCustomDrawer extends StatelessWidget {
@@ -12,13 +13,13 @@ class MyCustomDrawer extends StatelessWidget {
       child: Column(
         children: <Widget>[
           UserAccountsDrawerHeader(
-            decoration: BoxDecoration(color: kColor2),
+            decoration: BoxDecoration(
+              color: kPrimaryColor,
+            ),
             currentAccountPicture: Hero(
               tag: 'userPicture',
-              child: CircleAvatar(
-                backgroundImage: AssetImage(
-                  'assets/images/profilePicturePlaceholder.jpg',
-                ),
+              child: CustomCircleAvatar(
+                borderColor: Colors.white,
               ),
             ),
             accountName: Text(
