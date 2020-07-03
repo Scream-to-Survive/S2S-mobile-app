@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:s2s/components/custom_circle_avatar.dart';
 import 'package:s2s/utilities/constants.dart';
 
-class MyCustomDrawer extends StatelessWidget {
-  const MyCustomDrawer({
+class CustomDrawer extends StatelessWidget {
+  const CustomDrawer({
     Key key,
   }) : super(key: key);
 
